@@ -10,6 +10,8 @@
 		7D06888A2159D5C400FFA64C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0688892159D5C400FFA64C /* main.c */; };
 		7D0688922159D9CF00FFA64C /* str_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0688912159D9CF00FFA64C /* str_list.c */; };
 		7D0688952159DEB300FFA64C /* get_path.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0688942159DEB300FFA64C /* get_path.c */; };
+		7D0688982159E25100FFA64C /* which.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0688972159E25100FFA64C /* which.c */; };
+		7D06889B2159E26400FFA64C /* where.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D06889A2159E26400FFA64C /* where.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,10 @@
 		7D0688912159D9CF00FFA64C /* str_list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = str_list.c; sourceTree = "<group>"; };
 		7D0688932159DEB300FFA64C /* get_path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = get_path.h; sourceTree = "<group>"; };
 		7D0688942159DEB300FFA64C /* get_path.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get_path.c; sourceTree = "<group>"; };
+		7D0688962159E25100FFA64C /* which.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = which.h; sourceTree = "<group>"; };
+		7D0688972159E25100FFA64C /* which.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = which.c; sourceTree = "<group>"; };
+		7D0688992159E26400FFA64C /* where.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = where.h; sourceTree = "<group>"; };
+		7D06889A2159E26400FFA64C /* where.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = where.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,10 @@
 				7D0688912159D9CF00FFA64C /* str_list.c */,
 				7D0688932159DEB300FFA64C /* get_path.h */,
 				7D0688942159DEB300FFA64C /* get_path.c */,
+				7D0688962159E25100FFA64C /* which.h */,
+				7D0688972159E25100FFA64C /* which.c */,
+				7D0688992159E26400FFA64C /* where.h */,
+				7D06889A2159E26400FFA64C /* where.c */,
 			);
 			path = myshell;
 			sourceTree = "<group>";
@@ -132,6 +142,8 @@
 				7D06888A2159D5C400FFA64C /* main.c in Sources */,
 				7D0688922159D9CF00FFA64C /* str_list.c in Sources */,
 				7D0688952159DEB300FFA64C /* get_path.c in Sources */,
+				7D06889B2159E26400FFA64C /* where.c in Sources */,
+				7D0688982159E25100FFA64C /* which.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
