@@ -10,6 +10,8 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <wordexp.h>
+
 #include "shell.h"
 #include "utils.h"
 #include "prompt.h"
@@ -17,7 +19,7 @@
 #include "history.h"
 #include "signal.h"
 
-#define CMD_ARV_BUFFER_SIZE 128
+#define CMD_ARV_BUFFER_SIZE 1024
 
 int main(int argc, const char * argv[], char **envp) {
     envs = envp;
@@ -49,20 +51,20 @@ int main(int argc, const char * argv[], char **envp) {
         add_history(buffer);
         do_alias(buffer);
         
+        // implement wildcard
+        wordexp_t exp;
+        char** w;
+        wordexp(buffer, &exp, 0);
+        w = exp.we_wordv;
+        if(exp.we_wordc >= CMD_ARV_BUFFER_SIZE){
+            perror("too many arguments");
+            exit(1);
+        }
         int cmd_argc = 0;
-        char * p;
-        p = strtok(buffer, " ");
-        if (!p) continue;
-        do
-        {
-            if (cmd_argc >= CMD_ARV_BUFFER_SIZE){
-                perror("too many arguments");
-                exit(1);
-            }
-            cmd_argv[cmd_argc] = (char *) malloc(strlen(p) + 1);
-            strcpy(cmd_argv[cmd_argc], p);
-            cmd_argc++;
-        } while ((p = strtok(NULL, " ")));
+        for (cmd_argc = 0; cmd_argc < exp.we_wordc; cmd_argc++) {
+            cmd_argv[cmd_argc] = (char *) malloc(strlen(w[cmd_argc]) + 1);
+            strcpy(cmd_argv[cmd_argc], w[cmd_argc]);
+        }
         
         // check if it's the build-in command
         struct build_in_cmd* cmd = NULL;

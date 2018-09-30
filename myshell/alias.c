@@ -11,10 +11,10 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MAX_ALIAS_NUM 128
-#define MAX_ALIAS_LEN 128
+#define MAX_ALIAS_NUM 1024
+#define MAX_ALIAS_LEN 1024
 
-struct alias_t all_alias[128] = { {.alias = NULL, .cmd = NULL } };
+struct alias_t all_alias[MAX_ALIAS_NUM] = { {.alias = NULL, .cmd = NULL } };
 
 struct alias_t* find_alias(char* cmd);
 void print_all_alias();
@@ -37,7 +37,7 @@ void do_alias(char* cmdline)  {
     // Handle alias too long.
     unsigned long cmd_line_str_len = strlen(cmdline);
     if (cmd_line_str_len + strlen(a_ptr->cmd) + 2 > CMD_BUFFER_SIZE) {
-        fprintf(stderr, "Cmd too long");
+        fprintf(stderr, "Cmd too long\n");
         return;
     }
     
@@ -60,7 +60,7 @@ int cmd_alias(int argc, const char* argv[]) {
         char buffer[MAX_ALIAS_LEN] = {0};
         for (int i = 2; i < argc; i++) {
             if (strlen(buffer) + strlen(argv[i]) + 2 > MAX_ALIAS_LEN) {
-                fprintf(stderr, "alias: Alias too long");
+                fprintf(stderr, "alias: Alias too long\n");
                 return 1;
             }
             strcat(buffer, argv[i]);

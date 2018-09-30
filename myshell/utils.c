@@ -45,6 +45,7 @@ char* find_cmd_in_path(const char* cmd_in) {
 }
 
 struct build_in_cmd* find_build_in_cmd(const char* cmd) {
+    if(!cmd) return NULL;
     int i = 0;
     while (1) {
         if (!build_in_cmds[i].cmd_name) {
