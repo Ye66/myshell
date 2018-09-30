@@ -37,7 +37,7 @@ struct build_in_cmd build_in_cmds[] = {
     {.cmd_name = "pid", .command = &cmd_pid},
     {.cmd_name = "cd", .command = &cmd_cd},
     {.cmd_name = "prompt", .command = &cmd_prompt},
-    {.cmd_name = "ls", .command = &cmd_list},
+    {.cmd_name = "list", .command = &cmd_list},
     {.cmd_name = "printenv", .command = &cmd_printenv},
     {.cmd_name = "alias", .command = &cmd_alias},
     {.cmd_name = "history", .command = &cmd_history},
@@ -56,7 +56,7 @@ int execve_cmd(int argc, const char * argv[], char **envp, timeout) {
         if (access(argv[0], X_OK) == 0) {
             real_cmd = dup_str(argv[0]);
         } else {
-            fprintf(stderr, "cmd not found\n");
+            fprintf(stderr, "Path doesn't exist\n");
             return 1;
         }
     } else {

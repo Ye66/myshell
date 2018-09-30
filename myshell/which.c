@@ -29,8 +29,9 @@ int cmd_which(int argc, const char* argv[]){
         if (find_build_in_cmd(argv[i])) {
             found = 1;
             printf("%s: shell built-in command.\n", argv[i]);
+        } else {
+            which_helper(argv[i], found);
         }
-        which_helper(argv[i], found);
     }
     return 0;
 }

@@ -14,6 +14,8 @@
 
 #include "utils.h"
 
+int try_cd(const char * dir);
+
 int cmd_cd(int argc, const char* argv[]) {
     if (argc > 2) {
         fprintf(stderr, "cd: Too many arguments\n");
@@ -22,17 +24,27 @@ int cmd_cd(int argc, const char* argv[]) {
 
     if (argc == 1) {
         char* home = getenv("HOME");
-        if (!home) {
+        if (!home || chdir(home)) {
             fprintf(stderr, "cd: Fail to get home\n");
         }
         return chdir(home);
     }
+    // cd to a directory
     static char buffer[CWD_MAX_PATH_LEN] = {0};
     static const char* last_cwd = NULL;
     if (!strcmp(argv[1], "-") && last_cwd) {
-        return chdir(last_cwd);
+        return try_cd(last_cwd);
     } else {
         last_cwd = getcwd(buffer, CWD_MAX_PATH_LEN);
-        return chdir(argv[1]);
+        return try_cd(argv[1]);
+    }
+}
+
+int try_cd(const char * dir){
+    if (!chdir(dir)) {
+        return 0;
+    } else {
+        fprintf(stderr, "cd: Fail to get to directory %s\n", dir);
+        return 1;
     }
 }
