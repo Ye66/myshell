@@ -13,6 +13,7 @@
 
 #include "str_list.h"
 
+// parse the env and return a linked_list
 struct str_list_node* get_path();
 
 #endif /* get_path_h */

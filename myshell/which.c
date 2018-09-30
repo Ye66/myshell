@@ -15,26 +15,32 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void which_helper(const char* cmd);
+#include "shell.h"
+#include "utils.h"
+
+void which_helper(const char* cmd, int found);
 
 int cmd_which(int argc, const char* argv[]){
+    if (argc == 1) {
+        perror("which: Too few arguments.");
+    }
     for (int i = 1; i < argc; i++) {
-        which_helper(argv[i]);
+        int found = 0;
+        if (find_build_in_cmd(argv[i])) {
+            found = 1;
+            printf("%s: shell built-in command.\n", argv[i]);
+        }
+        which_helper(argv[i], found);
     }
     return 0;
 }
 
-void which_helper(const char* cmd){
-    struct str_list_node* p = get_path();
-    while (p) {
-        unsigned long buffer_len = strlen(p->content) + strlen(cmd) + 2;
-        char* buffer = (char*) malloc(buffer_len);
-        memset(buffer, 0, buffer_len);
-        sprintf(buffer, "%s/%s", p->content, cmd);
-        if (access(buffer, F_OK) == 0) {
-            printf("[%s]\n", cmd);
-            break;
-        }
-        p = p->next;
+void which_helper(const char* cmd, int found){
+    const char* cmd_with_path = find_cmd_in_path(cmd);
+    if (!cmd_with_path && !found) {
+        fprintf(stderr, "%s: Command not found.\n", cmd);
+        return;
     }
+    printf("%s\n", cmd_with_path);
+    free((void *)cmd_with_path);
 }

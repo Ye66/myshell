@@ -18,7 +18,7 @@ struct str_list_node* append(struct str_list_node* head,
     
     node->content = (char*) malloc(strlen(content)+1);
     strcpy(node->content, content);
-    node->content = NULL;
+    node->next = NULL;
     
     if (!head) return node;
     struct str_list_node* tail = head;
