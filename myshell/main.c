@@ -11,6 +11,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <wordexp.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <time.h>
+#include <signal.h>
+#include <errno.h>
 
 #include "shell.h"
 #include "utils.h"
@@ -32,17 +40,27 @@ int main(int argc, const char * argv[], char **envp) {
         timeout = atoi(argv[1]);
     }
     
+
+
     while (1) {
         print_prompt();
-        if (!fgets(buffer, CMD_BUFFER_SIZE, stdin)){
+        while (1) {
+            if(fgets(buffer, CMD_BUFFER_SIZE, stdin)) {
+                break;
+            }
             if (feof(stdin)) {
                 clearerr(stdin);
                 printf("\n");
+                print_prompt();
+                continue;
+            }
+            if (errno == EINTR) {
                 continue;
             }
             perror("command line too long");
             exit(1);
         }
+
         memset(cmd_argv, 0, CMD_ARV_BUFFER_SIZE);
         // Delete "\n".
         if(strlen(buffer) > 0)
@@ -82,3 +100,7 @@ int main(int argc, const char * argv[], char **envp) {
 
     return 0;
 }
+
+
+
+

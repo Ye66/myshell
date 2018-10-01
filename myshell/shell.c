@@ -27,8 +27,15 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <time.h>
+#include <signal.h>
+#include <string.h>
 
 char ** envs;
+pid_t child_pid;
+
+void sig_handler(int signo);
 // store all build-in commands
 struct build_in_cmd build_in_cmds[] = {
     {.cmd_name = "which", .command = &cmd_which},
@@ -53,6 +60,7 @@ int execve_cmd(int argc, const char * argv[], char **envp, int timeout) {
     if (argc == 0) {
         return 0;
     }
+    child_pid = -1;
     char* real_cmd = NULL;
     if (is_path(argv[0])) {
         if (access(argv[0], X_OK) == 0) {
@@ -80,14 +88,60 @@ int execve_cmd(int argc, const char * argv[], char **envp, int timeout) {
         fprintf(stderr, "Fail to run cmd");
         ret = 1;
     } else {
+        child_pid = pid;
+        // set a timer
+        timer_t timerid;
+        if (timeout > 0)
+        {
+            struct sigevent evp;
+            struct sigaction act;
+            memset(&act, 0, sizeof(act));
+            act.sa_handler = sig_handler;
+            act.sa_flags = 0;
+            sigemptyset(&act.sa_mask);
+
+            if (sigaction(SIGUSR1, &act, NULL) == -1)
+            {
+                perror("fail to sigaction");
+                exit(-1);
+            }
+            memset(&evp, 0, sizeof(struct sigevent));
+            evp.sigev_signo = SIGUSR1;
+            evp.sigev_notify = SIGEV_SIGNAL;
+            if (timer_create(CLOCK_REALTIME, &evp, &timerid) == -1)
+            {
+                perror("fail to timer_create");
+                exit(-1);
+            }
+            struct itimerspec it;
+            it.it_interval.tv_sec = timeout;
+            it.it_interval.tv_nsec = 0;
+            it.it_value.tv_sec = timeout;
+            it.it_value.tv_nsec = 0;
+            if (timer_settime(timerid, 0, &it, 0) == -1) {
+                perror("fail to timer_settime");
+                exit(-1);
+            }
+        }
         int status;
-        waitpid(pid, &status, 0);
+        waitpid(pid, &status, WUNTRACED);
+        child_pid = -1;
         if (status) {
             printf("%d\n", status);
+        }
+        if (timeout > 0) {
+            timer_delete(timerid);
         }
         ret = status;
     }
     free(real_cmd);
     return ret;
+}
+
+void sig_handler(int signo) {
+    if(child_pid > 0) {
+        kill(child_pid, SIGTERM);
+        printf("!!! taking too long to execute this command !!!\n");
+    }
 }
 

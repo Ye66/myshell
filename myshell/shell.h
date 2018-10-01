@@ -9,8 +9,13 @@
 #define shell_h
 
 #include <stdio.h>
+#include <time.h>
 
 #define CMD_BUFFER_SIZE 128
+
+int execve_cmd(int argc, const char * argv[], char **envp, int timeout);
+
+extern pid_t child_pid;
 
 struct build_in_cmd{
     char* cmd_name;
@@ -18,8 +23,7 @@ struct build_in_cmd{
 };
 
 extern char ** envs;
-extern struct build_in_cmd build_in_cmds[];
 
-int execve_cmd(int argc, const char * argv[], char **envp, int timeout);
+extern struct build_in_cmd build_in_cmds[];
 
 #endif /* shell_h */
