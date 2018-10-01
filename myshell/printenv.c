@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// 1 argument: print all env
+// 2 arguments: print a particular env
 int cmd_printenv(int argc, const char* argv[]) {
     if (argc == 1) {
         char** env = envs;

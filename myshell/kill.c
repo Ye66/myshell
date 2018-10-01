@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <signal.h>
 
+// command kill function
 int cmd_kill(int argc, const char* argv[]) {
     if (argc <= 1) {
         fprintf(stderr, "kill: too few arguments\n");

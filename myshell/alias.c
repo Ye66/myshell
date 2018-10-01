@@ -14,6 +14,7 @@
 #define MAX_ALIAS_NUM 1024
 #define MAX_ALIAS_LEN 1024
 
+// store alias
 struct alias_t all_alias[MAX_ALIAS_NUM] = { {.alias = NULL, .cmd = NULL } };
 
 struct alias_t* find_alias(char* cmd);

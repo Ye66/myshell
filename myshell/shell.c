@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 char ** envs;
+// store all build-in commands
 struct build_in_cmd build_in_cmds[] = {
     {.cmd_name = "which", .command = &cmd_which},
     {.cmd_name = "where", .command = &cmd_where},
@@ -47,7 +48,8 @@ struct build_in_cmd build_in_cmds[] = {
     {.cmd_name = NULL, .command = NULL },
 };
 
-int execve_cmd(int argc, const char * argv[], char **envp, timeout) {
+// execute command in PATH
+int execve_cmd(int argc, const char * argv[], char **envp, int timeout) {
     if (argc == 0) {
         return 0;
     }

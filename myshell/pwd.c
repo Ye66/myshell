@@ -11,6 +11,7 @@
 
 #include "utils.h"
 
+// command pwd
 int cmd_pwd(int argc, const char* argv[]) {
     if (argc > 1) {
         fprintf(stderr, "pwd: Too many arguments\n");

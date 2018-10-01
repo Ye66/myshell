@@ -44,6 +44,7 @@ char* find_cmd_in_path(const char* cmd_in) {
     }
 }
 
+// return a pointer to build-in command function
 struct build_in_cmd* find_build_in_cmd(const char* cmd) {
     if(!cmd) return NULL;
     int i = 0;
@@ -58,7 +59,7 @@ struct build_in_cmd* find_build_in_cmd(const char* cmd) {
     }
     return NULL;
 }
-
+// check if str is a path
 int is_path(const char* str) {
     if (str[0] == '/') {
         return 1;

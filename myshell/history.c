@@ -14,8 +14,10 @@
 
 #define HISTORY_DEFAULT 10
 
+// store all history in a linked list
 struct str_list_node* head = NULL;
 
+// print recent n history
 void print_history(int n);
 
 void add_history(const char* cmdline) {

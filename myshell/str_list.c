@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// linked list
 struct str_list_node* append(struct str_list_node* head,
                             char* content){
     struct str_list_node* node = (struct str_list_node*) malloc(sizeof(struct str_list_node));

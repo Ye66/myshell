@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// get PATH and store in linked list
 struct str_list_node* get_path()
 {
   

@@ -27,7 +27,7 @@ int main(int argc, const char * argv[], char **envp) {
     char* cmd_argv[CMD_ARV_BUFFER_SIZE] = {NULL};
     ignore_signals();
     
-    int timeout = -1;
+    int timeout = -1; // in seconds
     if (argc == 2) {
         timeout = atoi(argv[1]);
     }

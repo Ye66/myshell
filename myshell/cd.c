@@ -14,8 +14,10 @@
 
 #include "utils.h"
 
+// try cd, if failed print error message
 int try_cd(const char * dir);
 
+// command cd function
 int cmd_cd(int argc, const char* argv[]) {
     if (argc > 2) {
         fprintf(stderr, "cd: Too many arguments\n");

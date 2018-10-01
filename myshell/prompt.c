@@ -17,6 +17,7 @@
 void print_cwd();
 char prompt[MAX_PROMPT_LEN] = { 0 };
 
+// command prompt
 int cmd_prompt(int argc, const char* argv[]) {
     if (argc > 2) {
         fprintf(stderr, "prompt: Too many arguments\n");
